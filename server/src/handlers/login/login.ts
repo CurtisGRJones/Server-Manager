@@ -30,6 +30,7 @@ const auth = async (user: string, pass: string, remember: boolean): Promise<Resp
 
     const password = await client.getPasswordFromUsername(user)
     if (!checkPassword(password, pass)) {
+        await timeout
         return {
             statusCode: 200,
             authenticated: false,
@@ -39,7 +40,6 @@ const auth = async (user: string, pass: string, remember: boolean): Promise<Resp
 
     const verified = client.isUserVerified(user)
     if (!verified) {
-        await timeout
         return {
             statusCode: 200,
             authenticated: true,
