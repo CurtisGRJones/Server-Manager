@@ -1,21 +1,34 @@
-﻿<div class="login-wrapper center">
-  <form name="login" method="POST" action="/api/login" class="">
-    <div class="username">
+﻿<div class="register-wrapper center">
+  <form name="register" method="POST" action="/api/register" class="">
+    <div class="username input-box">
       <label for="user" class="form-label">Username</label>
       <input name="user" id="user" type="text" class="needs-validation" value="" required />
       <div class="invalid-feedback">Username Required</div>
     </div>
-    <div class="password">
+    <div class="password input-box">
       <label for="pass" class="form-label">Password</label>
       <input name="pass" id="pass" type="password" class="needs-validation" required />
       <div class="valid-feedback"></div>
       <div class="invalid-feedback">Password Required</div>
     </div>
-    <div class="remember">
-      <input name="remember" type="checkbox" id="remember-me">
-      <label class="form-check-label" for="remember-me">Remember Me</label>
+    <div class="firstName input-box">
+      <label for="firstname" class="form-label">First Name</label>
+      <input name="firstname" id="firstname" type="text" class="needs-validation" required />
+      <div class="valid-feedback"></div>
+      <div class="invalid-feedback">First Name Required</div>
     </div>
-    <label>  </label>
-    <button type="submit" class="login center">Login</button>
+    <div class="lastName input-box">
+      <label for="lastname" class="form-label">Last Name</label>
+      <input name="lastname" id="lastname" type="text" class="needs-validation" required />
+      <div class="valid-feedback"></div>
+      <div class="invalid-feedback">Password Required</div>
+    </div>
+    <div class="email input-box">
+      <label for="email" class="form-label">Email</label>
+      <input name="email" id="email" type="text" class="needs-validation" required />
+      <div class="valid-feedback"></div>
+      <div class="invalid-feedback">Email Required</div>
+    </div>
+    <button type="submit" class="register center">register</button>
   </form>
 </div>

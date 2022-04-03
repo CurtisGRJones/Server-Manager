@@ -16,7 +16,7 @@ form {
   margin-left: 10px;
 }
 
-.login-wrapper {
+.register-wrapper {
   margin: 0 auto;
   width: 50%;
   max-width: 200px;
@@ -29,7 +29,7 @@ form {
   text-align: left;
 }
 
-.login {
+.register {
   width: 50%;
   display: flex;
   justify-content: center;
@@ -45,7 +45,7 @@ form {
 
 }
 
-.username, .password {
+.input-box {
   height: 80px;
 }
 

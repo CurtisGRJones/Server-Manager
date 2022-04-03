@@ -21,8 +21,6 @@ export class Postgres {
     async register(options: registerOptions): Promise<boolean> {
         await this.connect
 
-        console.log( formatPassword(options.pass).length )
-
         await this.client.query(`INSERT INTO users (
             username,
             password,
