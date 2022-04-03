@@ -1,0 +1,52 @@
+form {
+  padding: 10px 10px 10px 10px;
+}
+
+.center-s {
+  left: 50%;
+  -ms-transform: translateX(50%);
+  transform: translateX(50%);
+}
+
+.needs-validation {
+  width: 100%;
+}
+
+.form-check-label {
+  margin-left: 10px;
+}
+
+.login-wrapper {
+  margin: 0 auto;
+  width: 50%;
+  max-width: 200px;
+  border: solid black;
+}
+
+.form-label {
+  position: relative;
+  left: 10px;
+  text-align: left;
+}
+
+.login {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 50%;
+  -ms-transform: translateX(50%);
+  transform: translateX(50%);
+}
+
+.invalid-feedback, .valid-feedback {
+  text-align: center;
+  font-size: 10pt;
+
+}
+
+.username, .password {
+  height: 80px;
+}
+
+
