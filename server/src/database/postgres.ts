@@ -44,6 +44,17 @@ export class Postgres {
         return true
     }
 
+    async doesUserExist( user: string ): Promise<boolean> {
+        await this.connect
+
+        const queryResults = await this.client.query(
+            'SELECT EXISTS(SELECT 1 FROM users WHERE username = $1)',
+            [user]
+        )
+
+        return queryResults.rows[0].exists
+    }
+
     async isUserVerified( user: string ): Promise<boolean> {
         await this.connect
 

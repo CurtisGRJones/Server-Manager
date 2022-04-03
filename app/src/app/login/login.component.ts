@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute } from "@angular/router";
+import {AuthService} from "@app/auth.service";
 
 @Component( {
   selector: 'app-login',
@@ -11,23 +11,24 @@ export class LoginComponent implements OnInit {
   validated: boolean = false
   user: string = ""
 
-  constructor( private route: ActivatedRoute ) {
+  constructor( private Auth: AuthService ) {
 
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.validated = params['validated'];
-      this.user = params['user']
-    });
     console.log( this.validated )
     console.log( this.user )
   }
 
   // TODO type this
-  loginUser(event: Event) {
+  loginUser(event: SubmitEvent) {
     event.preventDefault()
-    console.log(event.constructor)
+    const target = event.target as Element
+    const user: string = (<HTMLInputElement>target.querySelector('#user')).value
+    const pass: string = (<HTMLInputElement>target.querySelector('#pass')).value
+    const remember: string = (<HTMLButtonElement>target.querySelector('#remember-me')).value
+
+    this.Auth.getUserInfo(user, pass, remember)
   }
 
 }
