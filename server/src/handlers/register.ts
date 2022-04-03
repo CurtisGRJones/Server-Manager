@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import {Postgres} from "../../database/postgres";
+import {Postgres} from "../database/postgres";
 
 export const register: RequestHandler = ( req, res ) => {
     const client = new Postgres()

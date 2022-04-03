@@ -6,10 +6,9 @@ import {Err500Component} from "@app/err500";
 import {LoginComponent} from "@app/login";
 import {RegisterComponent} from "@app/register";
 import {ServerlistComponent} from "@app/serverlist";
-import {AdminComponent} from "@app/admin";
-import {AdminAuthGuard} from "@app/admin-auth.guard";
 
 const routes: Routes = [
+
   {
     path: "home",
     component: HomeComponent
@@ -25,12 +24,6 @@ const routes: Routes = [
   {
     path: "registrationRequested",
     component: RegistrationSubmittedComponent
-  },
-  {
-    path: "admin",
-    component: AdminComponent,
-    canActivate: [AdminAuthGuard],
-    canActivateChild: [AdminAuthGuard],
   },
   {
     path: "serverList",
@@ -50,4 +43,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot( routes )],
   exports: [RouterModule]
 } )
-export class AppRoutingModule { }
+export class AdminRoutingModule { }

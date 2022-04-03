@@ -1,16 +1,20 @@
 import { v4 as uuidv4 } from 'uuid';
 import { RequestHandler } from "express";
-import {Postgres} from "../../database/postgres";
-import {checkPassword} from "../../tools/passwords";
-import {sleep} from "../../tools/sleep";
+import {Postgres} from "../database/postgres";
+import {checkPassword} from "../tools/passwords";
+import {sleep} from "../tools/sleep";
 
 type ResponseOptions = {
     statusCode: number,
     authenticated?: boolean,
+    userData?: {
+        firstName: string,
+        lastName: string
+    }
     redirect?: string,
     authToken?: {
         value: string,
-        expires: Date
+        expires: string
     }
 }
 
@@ -24,17 +28,16 @@ const auth = async (user: string, pass: string, remember: boolean): Promise<Resp
         return {
             statusCode: 200,
             authenticated: false,
-            redirect: '/login'
         }
     }
 
-    const password = await client.getPasswordFromUsername(user)
+    const userData = await client.getLoginDataFromUsername(user)
+    const password = userData.password
     if (!checkPassword(password, pass)) {
         await timeout
         return {
             statusCode: 200,
             authenticated: false,
-            redirect: '/login'
         }
     }
 
@@ -55,7 +58,11 @@ const auth = async (user: string, pass: string, remember: boolean): Promise<Resp
         authenticated: true,
         authToken: {
             value: cookie,
-            expires: new Date(Date.now() + 2592000000)
+            expires: new Date(Date.now() + 2592000000).toUTCString()
+        },
+        userData: {
+            firstName: userData.first_name,
+            lastName: userData.last_name
         },
         redirect: '/home'
     }

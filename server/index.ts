@@ -1,7 +1,8 @@
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
-import {login} from "./src/handlers/login/login";
-import {register} from "./src/handlers/register/register";
+import {login} from "./src/handlers/login";
+import {register} from "./src/handlers/register";
+import {authCookies} from "./src/handlers/auth";
 
 require('dotenv').config()
 
@@ -18,6 +19,8 @@ app.use( express.urlencoded( { extended: false } ) )
 app.post( '/api/login',  login)
 
 app.post( '/api/register',  register)
+
+app.post( '/api/auth', authCookies )
 
 app.get( '/api', ( req, res ) => {
     res.send( 'API works' )

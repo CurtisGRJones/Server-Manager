@@ -12,6 +12,8 @@ import {HttpClientModule} from "@angular/common/http";
 import {LoginComponent} from "@app/login";
 import {RegisterComponent} from "@app/register";
 import { ServerlistComponent } from '@app/serverlist';
+import { AdminComponent } from '@app/admin';
+import { WelcomeMenuComponent } from './welcome-menu/welcome-menu.component';
 
 @NgModule( {
   declarations: [
@@ -23,6 +25,8 @@ import { ServerlistComponent } from '@app/serverlist';
     LoginMenuComponent,
     Err500Component,
     ServerlistComponent,
+    AdminComponent,
+    WelcomeMenuComponent,
   ],
   imports: [
     BrowserModule,

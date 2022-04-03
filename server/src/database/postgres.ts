@@ -66,16 +66,15 @@ export class Postgres {
         return queryResults.rows[0].verified
     }
 
-    async getPasswordFromUsername(user: string): Promise<string>  {
+    async getLoginDataFromUsername(user: string): Promise<any>  {
         await this.connect
 
         const queryResults = await this.client.query(
-            'SELECT password FROM users WHERE username = $1',
+            'SELECT password, first_name, last_name FROM users WHERE username = $1',
             [user]
         )
 
-        return queryResults.rows[0].password
-
+        return queryResults.rows[0]
     }
 
     async saveCookie(cookie: string, user: string, remember: boolean = false): Promise<boolean>  {
