@@ -24,4 +24,10 @@ export class LoginComponent implements OnInit {
     console.log( this.user )
   }
 
+  // TODO type this
+  loginUser(event: Event) {
+    event.preventDefault()
+    console.log(event.constructor)
+  }
+
 }

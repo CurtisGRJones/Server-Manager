@@ -8,9 +8,10 @@ import { RegistrationSubmittedComponent } from '@app/registeration-submitted';
 import { LoginMenuComponent } from '@app/login-menu';
 import { Err500Component } from '@app/err500'
 import {ReactiveFormsModule} from "@angular/forms";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 import {LoginComponent} from "@app/login";
 import {RegisterComponent} from "@app/register";
+import { ServerlistComponent } from '@app/serverlist';
 
 @NgModule( {
   declarations: [
@@ -21,6 +22,7 @@ import {RegisterComponent} from "@app/register";
     RegistrationSubmittedComponent,
     LoginMenuComponent,
     Err500Component,
+    ServerlistComponent,
   ],
   imports: [
     BrowserModule,

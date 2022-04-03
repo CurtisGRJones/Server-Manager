@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { HomeComponent } from '@app/home'
-// TODO shorten these
 import {RegistrationSubmittedComponent} from "@app/registeration-submitted";
 import {Err500Component} from "@app/err500";
 import {LoginComponent} from "@app/login";
 import {RegisterComponent} from "@app/register";
+import {ServerlistComponent} from "@app/serverlist";
 
 const routes: Routes = [
 
@@ -24,6 +24,10 @@ const routes: Routes = [
   {
     path: "registrationRequested",
     component: RegistrationSubmittedComponent
+  },
+  {
+    path: "serverList",
+    component: ServerlistComponent,
   },
   {
     path: "500",
