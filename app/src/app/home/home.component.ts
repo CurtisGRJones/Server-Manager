@@ -1,12 +1,24 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import {UserService} from "@app/user.service";
 
-@Component({ templateUrl: 'home.component.html' })
+@Component({
+  templateUrl: 'home.component.html',
+  styleUrls: ['home.component.css']
+})
 export class HomeComponent implements OnInit {
-  currentUser: any;
-  users = [];
+  authenticated: boolean | undefined
 
-  constructor() { }
+  constructor(
+    private user: UserService,
+  ) {
+    this.user.isUserAuthenticated.subscribe( result => {
+      this.authenticated = result;
+    });
+  }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.user.isAuthenticated.subscribe( result => {
+      this.user.isUserAuthenticated.next(result);
+    })
   }
 }

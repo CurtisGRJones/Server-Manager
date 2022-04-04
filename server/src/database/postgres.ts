@@ -164,6 +164,14 @@ export class Postgres {
         )
     }
 
+    async getGameData(): Promise<any[]> {
+        return (await this.client.query(
+            `SELECT games.name, games.image_path, CONCAT(users.first_name, ' ' , users.last_name) as added_by 
+            FROM games LEFT JOIN users 
+            ON games.added_by = users.username`,
+        )).rows
+    }
+
     async close() {
         return this.client.end()
     }

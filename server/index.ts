@@ -6,6 +6,7 @@ import {authCookies} from "./src/handlers/auth";
 import * as cookieParser from "cookie-parser";
 import {getDataFromCookies} from "./src/handlers/userData";
 import {logout} from "./src/handlers/logout";
+import {games} from "./src/handlers/games";
 
 require('dotenv').config()
 
@@ -26,6 +27,8 @@ app.post( '/api/register',  register)
 app.get( '/api/auth', authCookies )
 
 app.get( '/api/user-data', getDataFromCookies )
+
+app.get( '/api/games', games)
 
 app.get( '/api', ( req, res ) => {
     res.send( 'API works' )

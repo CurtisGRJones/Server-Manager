@@ -16,6 +16,7 @@ import { AdminComponent } from '@app/admin';
 import { WelcomeMenuComponent } from '@app/top-corner-menu/welcome-menu';
 import { LogoutComponent } from '@app/logout';
 import { TopCornerMenuComponent } from './top-corner-menu/top-corner-menu.component';
+import { GamesTableComponent } from './gamestable/games-table.component';
 
 @NgModule( {
   declarations: [
@@ -31,6 +32,7 @@ import { TopCornerMenuComponent } from './top-corner-menu/top-corner-menu.compon
     WelcomeMenuComponent,
     LogoutComponent,
     TopCornerMenuComponent,
+    GamesTableComponent,
   ],
   imports: [
     BrowserModule,
