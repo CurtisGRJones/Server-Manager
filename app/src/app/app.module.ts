@@ -21,6 +21,12 @@ import { ServersComponent } from './servers/servers.component';
 import { LeftMenuComponent } from './left-menu/left-menu.component';
 import { GamesComponent } from './games/games.component';
 import { Err404Component } from './err404/err404.component';
+import { UserUsageComponent } from './admin/user-usage/user-usage.component';
+import { ServerUsageComponent } from './admin/server-usage/server-usage.component';
+import { RegistrationRequestsComponent } from './admin/registration-requests/registration-requests.component';
+import { AddGameComponent } from './admin/add-game/add-game.component';
+import { AddServerComponent } from './admin/add-server/add-server.component';
+import { ManageUsersComponent } from './admin/manage-users/manage-users.component';
 
 @NgModule( {
   declarations: [
@@ -41,6 +47,12 @@ import { Err404Component } from './err404/err404.component';
     LeftMenuComponent,
     GamesComponent,
     Err404Component,
+    UserUsageComponent,
+    ServerUsageComponent,
+    RegistrationRequestsComponent,
+    AddGameComponent,
+    AddServerComponent,
+    ManageUsersComponent,
   ],
   imports: [
     BrowserModule,
