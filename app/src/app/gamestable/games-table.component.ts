@@ -19,7 +19,6 @@ export class GamesTableComponent implements OnInit {
 
   @Input()
   userFilter: string | undefined;
-
   @Input()
   nameFilter: string | undefined
 
