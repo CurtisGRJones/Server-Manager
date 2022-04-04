@@ -40,12 +40,30 @@ export class ServerlistComponent implements OnInit {
     })
   }
 
-  startServer(id: string): void {
-    console.log(`Starting server ID: ${id}`)
+  startServer(server: Server): void {
+    console.log(`Starting server ID: ${server.id}`)
+    this.http.post<{ success: boolean }>( '/api/servers/start',
+      {
+        id: server.id
+      }
+    ).subscribe( resp => {
+      if ( resp.success ) {
+        server.active = true
+      }
+    })
   }
 
-  stopServer(id: string): void {
-    console.log(`Stopping server ID: ${id}`)
+  stopServer(server: Server): void {
+    console.log(`Stopping server ID: ${server.id}`)
+    this.http.post<{ success: boolean }>( '/api/servers/stop',
+      {
+        id: server.id
+      }
+    ).subscribe( resp  => {
+      if ( resp.success ) {
+        server.active = false
+      }
+    })
   }
 
 }

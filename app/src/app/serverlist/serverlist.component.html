@@ -20,8 +20,8 @@
       </td>
       <td> {{ server.addedBy }} </td>
       <td>
-        <button class="btn btn-danger" (click)="stopServer(server.id)" *ngIf="server.active"> Stop </button>
-        <button class="btn btn-success" (click)="startServer(server.id)" *ngIf="!server.active"> Start </button>
+        <button class="btn btn-danger" (click)="stopServer(server)" *ngIf="server.active"> Stop </button>
+        <button class="btn btn-success" (click)="startServer(server)" *ngIf="!server.active"> Start </button>
       </td>
     </tr>
   </table>

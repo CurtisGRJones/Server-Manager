@@ -8,6 +8,8 @@ import {getDataFromCookies} from "./src/handlers/userData";
 import {logout} from "./src/handlers/logout";
 import {games} from "./src/handlers/games";
 import {servers} from "./src/handlers/servers";
+import {start} from "./src/handlers/start";
+import {stop} from "./src/handlers/stop";
 
 require('dotenv').config()
 
@@ -33,8 +35,8 @@ app.get( '/api/games', games)
 
 app.get( '/api/servers', servers)
 
-app.post( '/api/servers/start', servers)
-app.post( '/api/servers/stop', servers)
+app.post( '/api/servers/start', start)
+app.post( '/api/servers/stop', stop)
 
 app.get( '/api', ( req, res ) => {
     res.send( 'API works' )

@@ -165,6 +165,8 @@ export class Postgres {
     }
 
     async getGameData(): Promise<any[]> {
+        await this.connect
+
         return (await this.client.query(
             `SELECT games.name, games.image_path, CONCAT(users.first_name, ' ' , users.last_name) as added_by 
             FROM games LEFT JOIN users 
@@ -173,10 +175,33 @@ export class Postgres {
     }
 
     async getServersData(): Promise<any[]> {
+        await this.connect
+
         return (await this.client.query(
             `SELECT servers.id, servers.ip, servers.game, servers.active, CONCAT(users.first_name, ' ' , users.last_name) as added_by 
-            FROM servers LEFT JOIN users ON servers.added_by = users.username`,
+            FROM servers LEFT JOIN users ON servers.added_by = users.username 
+            ORDER BY servers.ip`,
         )).rows
+    }
+
+    async doesServerExist(server: string): Promise<boolean> {
+        await this.connect
+
+        const queryResults = await this.client.query(
+            'SELECT EXISTS(SELECT 1 FROM servers WHERE id = $1)',
+            [server]
+        )
+
+        return queryResults.rows[0].exists
+    }
+
+    async setServerActive(id:string, state: boolean): Promise<void> {
+        await this.connect
+
+        await this.client.query(
+            'UPDATE servers SET active = $1 WHERE id = $2',
+            [state, id]
+        )
     }
 
     async close() {
