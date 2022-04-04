@@ -11,18 +11,14 @@
 
 .table {
   position: absolute;
-  top: 13em;
-}
-
-.users {
-  display: inline;
-}
-
-#dropdownMenuLink {
-  display: inline;
+  top: 15em;
 }
 
 .submit {
   position: absolute;
   right: 1em;
+}
+
+.inline {
+  display: inline;
 }

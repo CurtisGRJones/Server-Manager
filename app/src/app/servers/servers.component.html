@@ -2,9 +2,16 @@
   <p> Search by Game: <input id="game" type="text" value="{{ nameSearch == 'undefined' ? '' : nameSearch }}" placeholder="Search for games"></p>
   <p> Search by IP: <input id="ip" type="text" value="{{ ipSearch == 'undefined' ? '' : ipSearch }}" placeholder="Search by IP"></p>
 
-  <p class="users"> Search by Users: </p>
+  <p class="inline"> Search by Active: </p>
+  <select id="active">
+    <option value='undefined'> None </option>
+    <option  [selected]="activeSearch" value=true>Yes</option>
+    <option  [selected]="activeSearch == false" value=false>No</option>
+  </select>
+  <br>
+  <p class="inline"> Search by Users: </p>
   <select id="user">
-    <option value="none"> None </option>
+    <option value=undefined> None </option>
     <option *ngFor="let user of allUsers" [selected]="user == usersSearch" [value]="user">{{user}}</option>
   </select>
 
