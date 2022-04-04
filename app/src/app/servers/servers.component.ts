@@ -9,10 +9,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class ServersComponent implements OnInit {
 
-  nameSearch: string | undefined
+  gameSearch: string | undefined
   usersSearch: string | undefined
   ipSearch: string | undefined
-  activeSearch: boolean | undefined
+  activeSearch: string | boolean | undefined
   allUsers: string[] = []
 
 
@@ -25,47 +25,45 @@ export class ServersComponent implements OnInit {
   ngOnInit(): void {
     let activeSearch = ''
     this.route.queryParams.subscribe( params => {
-      this.nameSearch = decodeURIComponent(params['name'])
+      this.gameSearch = decodeURIComponent(params['game'])
       this.ipSearch = decodeURIComponent(params['ip'])
       this.usersSearch = decodeURIComponent(params['user'])
-      activeSearch = params['active']
+      this.activeSearch = params['active']
     } )
 
-    console.log( activeSearch )
+    this.parseActiveSearch()
 
-    if ( activeSearch == 'undefined' ) {
-      this.activeSearch = undefined
-    } else {
-      this.activeSearch = activeSearch == 'true'
-    }
-
-    console.log(this.nameSearch)
+    console.log(this.gameSearch)
 
     this.http.get<string[]>("/api/serverUsers").subscribe( resp =>
       this.allUsers = resp
     )
   }
 
+  parseActiveSearch() {
+    if ( this.activeSearch == 'undefined' ) {
+      this.activeSearch = undefined
+    } else if ( this.activeSearch != undefined ) {
+      this.activeSearch = this.activeSearch == 'true'
+    }
+  }
+
   updateTable( event: SubmitEvent ): void{
     event.preventDefault()
     const target = event.target as Element
     this.usersSearch = (<HTMLInputElement>target.querySelector('#user'))?.value || ''
-    this.nameSearch = (<HTMLInputElement>target.querySelector('#game'))?.value || ''
+    this.gameSearch = (<HTMLInputElement>target.querySelector('#game'))?.value || ''
     this.ipSearch = (<HTMLInputElement>target.querySelector('#ip'))?.value || ''
-    const activeSearch = (<HTMLInputElement>target.querySelector('#active'))?.value
+    this.activeSearch = (<HTMLInputElement>target.querySelector('#active'))?.value
 
-    if ( activeSearch == 'undefined' ) {
-      this.activeSearch = undefined
-    } else {
-      this.activeSearch = activeSearch == 'true'
-    }
+    this.parseActiveSearch()
 
     this.router.navigate(
       [window.location.pathname],
       {
         queryParams: {
           user: this.usersSearch,
-          name: this.nameSearch,
+          game: this.gameSearch,
           ip: this.ipSearch,
           active: this.activeSearch
         },

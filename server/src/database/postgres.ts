@@ -183,7 +183,7 @@ export class Postgres {
                 `SELECT games.name, games.image_path, users.username 
             FROM games LEFT JOIN users 
             ON games.added_by = users.username
-            WHERE LOWER( games.name ) LIKE LOWER( $1 )`,
+            WHERE games.name ILIKE $1`,
                 [
                     game
                 ]
@@ -193,7 +193,7 @@ export class Postgres {
                 `SELECT games.name, games.image_path, users.username 
             FROM games LEFT JOIN users 
             ON games.added_by = users.username
-            WHERE users.username = $1 AND LOWER( games.name ) LIKE LOWER( $2 )`,
+            WHERE users.username = $1 AND games.name ILIKE $2`,
                 [
                     user,
                     game
@@ -230,6 +230,71 @@ export class Postgres {
             FROM servers LEFT JOIN users ON servers.added_by = users.username 
             ORDER BY servers.ip`,
         )).rows
+    }
+
+    async getServersDataFiltered(user: string | undefined, ip: string | undefined, game: string | undefined, active: boolean): Promise<any[]> {
+        if (ip == undefined) {
+            ip = '%'
+        } else {
+            ip = `%${ip}%`
+        }
+
+        if (game == undefined) {
+            game = '%'
+        } else {
+            game = `%${game}%`
+        }
+
+        await this.connect
+        if (user != undefined && active != undefined) {
+            return (await this.client.query(
+                `SELECT servers.id, servers.ip, servers.game, servers.active, users.username 
+                    FROM servers LEFT JOIN users ON servers.added_by = users.username 
+                    WHERE servers.ip ILIKE $1 AND servers.game ILIKE $2 AND users.username = $3 AND servers.active = $4
+                    ORDER BY servers.ip`,
+                [
+                    ip,
+                    game,
+                    user,
+                    active
+                ]
+            )).rows
+        } else if(user) {
+            return (await this.client.query(
+                `SELECT servers.id, servers.ip, servers.game, servers.active, users.username 
+                    FROM servers LEFT JOIN users ON servers.added_by = users.username 
+                    WHERE servers.ip ILIKE $1 AND servers.game ILIKE $2 AND users.username = $3
+                    ORDER BY servers.ip`,
+                [
+                    ip,
+                    game,
+                    user
+                ]
+            )).rows
+        } else if( active != undefined ) {
+            return (await this.client.query(
+                `SELECT servers.id, servers.ip, servers.game, servers.active, users.username 
+                    FROM servers LEFT JOIN users ON servers.added_by = users.username 
+                    WHERE servers.ip ILIKE $1 AND servers.game ILIKE $2 AND servers.active = $3
+                    ORDER BY servers.ip`,
+                [
+                    ip,
+                    game,
+                    active
+                ]
+            )).rows
+        } else {
+            return (await this.client.query(
+                `SELECT servers.id, servers.ip, servers.game, servers.active, users.username 
+                    FROM servers LEFT JOIN users ON servers.added_by = users.username 
+                    WHERE servers.ip ILIKE $1 AND servers.game ILIKE $2
+                    ORDER BY servers.ip`,
+                [
+                    ip,
+                    game
+                ]
+            )).rows
+        }
     }
 
     async doesServerExist(server: string): Promise<boolean> {

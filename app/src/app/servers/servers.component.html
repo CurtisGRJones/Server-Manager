@@ -1,5 +1,5 @@
 <form class="filters" (submit)="updateTable($event)">
-  <p> Search by Game: <input id="game" type="text" value="{{ nameSearch == 'undefined' ? '' : nameSearch }}" placeholder="Search for games"></p>
+  <p> Search by Game: <input id="game" type="text" value="{{ gameSearch == 'undefined' ? '' : gameSearch }}" placeholder="Search for games"></p>
   <p> Search by IP: <input id="ip" type="text" value="{{ ipSearch == 'undefined' ? '' : ipSearch }}" placeholder="Search by IP"></p>
 
   <p class="inline"> Search by Active: </p>
@@ -19,5 +19,5 @@
 </form>
 
 <div class="table">
-  <app-serverlist userFilter="{{ usersSearch }}" ipFilter="{{ ipSearch }}" nameFilter="{{nameSearch}}" activeFilter="{{ activeSearch }}"></app-serverlist>
+  <app-serverlist userFilter="{{ usersSearch }}" ipFilter="{{ ipSearch }}" gameFilter="{{gameSearch}}" activeFilter="{{ activeSearch }}"></app-serverlist>
 </div>

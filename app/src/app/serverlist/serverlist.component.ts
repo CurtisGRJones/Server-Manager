@@ -24,7 +24,7 @@ export class ServerlistComponent implements OnInit {
   @Input()
   ipFilter: string | undefined
   @Input()
-  nameFilter: string | undefined
+  gameFilter: string | undefined
   @Input()
   activeFilter: string | boolean | undefined
 
@@ -33,25 +33,61 @@ export class ServerlistComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.activeFilter == 'undefined') {
+    if (this.userFilter == 'undefined') {
+      this.userFilter = undefined
+    }
+
+    if (this.ipFilter == 'undefined') {
+      this.ipFilter = undefined
+    }
+
+    if (this.gameFilter == 'undefined') {
+      this.gameFilter = undefined
+    }
+
+    if (this.activeFilter == 'undefined' || this.activeFilter == '') {
       this.activeFilter = undefined
-    } else {
+    } else if (this.activeFilter != undefined){
       this.activeFilter = this.activeFilter == 'true'
     }
-    this.http.get<any[]>(
-      '/api/servers'
-    ).subscribe(resp => {
-      this.servers = resp.map(server => {
-        return {
-          game: server.game,
-          ip: server.ip,
-          active: server.active,
-          addedBy: server.username,
-          id: server.id,
+
+    if ( this.userFilter || this.ipFilter || this.gameFilter || this.activeFilter != undefined ) {
+      this.http.post<any[]>(
+        '/api/servers',
+        {
+          user: this.userFilter,
+          ip: this.ipFilter,
+          game: this.gameFilter,
+          active: this.activeFilter
         }
+      ).subscribe(resp => {
+        this.servers = resp.map(server => {
+          return {
+            game: server.game,
+            ip: server.ip,
+            active: server.active,
+            addedBy: server.username,
+            id: server.id,
+          }
+        })
+        this.serversPopulated = true
       })
-      this.serversPopulated = true
-    })
+    } else {
+      this.http.get<any[]>(
+        '/api/servers'
+      ).subscribe(resp => {
+        this.servers = resp.map(server => {
+          return {
+            game: server.game,
+            ip: server.ip,
+            active: server.active,
+            addedBy: server.username,
+            id: server.id,
+          }
+        })
+        this.serversPopulated = true
+      })
+    }
   }
 
   startServer(server: Server): void {
