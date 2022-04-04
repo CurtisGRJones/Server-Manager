@@ -136,7 +136,7 @@ export class Postgres {
 
         const queryResults = await this.client.query(
             `SELECT loginCookies.expiry, loginCookies.remember, loginCookies.last_used, 
-                            users.first_name, users.last_name, users.verified, users.username
+                            users.first_name, users.last_name, users.verified, users.username, users.role
                             FROM loginCookies 
                             INNER JOIN users
                             ON loginCookies.username = users.username

@@ -1,5 +1,6 @@
 import {RequestHandler} from "express";
 import {Postgres} from "../database/postgres";
+import {authenticated} from "../tools/cookies";
 
 
 export const servers: RequestHandler = ( req, res ) => {
@@ -7,9 +8,18 @@ export const servers: RequestHandler = ( req, res ) => {
 
     // TODO auth user
 
-    client.getServersData().then( servers => {
-        res.status(200).send(servers)
+    authenticated(req, client, 1).then( verified => {
+        if ( !verified ) {
+            res.status(200).send([])
+            return
+        } else {
+            client.getServersData().then( servers => {
+                res.status(200).send(servers)
+            })
+        }
     }).finally( () => {
         client.close()
     })
+
+
 }

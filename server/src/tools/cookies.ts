@@ -99,3 +99,33 @@ export async function deleteCookie(req, client: Postgres): Promise<void> {
 
     await client.removeCookie(cookie)
 }
+
+export async function authenticated(req, client: Postgres, level: number): Promise<boolean> {
+    const cookie = req.cookies.authToken
+
+    if( !cookie ) {
+        return false
+    }
+
+    if ( ! await client.doesCookieExist( cookie ) ) {
+        return false
+    }
+
+    const row = await client.getAccountInfoFromCookies( cookie )
+
+    let timedOut = true
+
+    if ( !row.remember || row.expiry < Date() ) {
+        if ( row.last_used < new Date(Date() + 300000)) { // 5 minutes
+            await client.useCookie(cookie)
+            timedOut = false
+        } else {
+            await client.removeCookie(cookie)
+            timedOut = true
+
+        }
+    }
+
+    return  !timedOut && row.verified && row.role >= level
+
+}
