@@ -6,10 +6,11 @@ import {authCookies} from "./src/handlers/auth";
 import * as cookieParser from "cookie-parser";
 import {getDataFromCookies} from "./src/handlers/userData";
 import {logout} from "./src/handlers/logout";
-import {games} from "./src/handlers/games";
+import {games, gamesFiltered} from "./src/handlers/games";
 import {servers} from "./src/handlers/servers";
 import {start} from "./src/handlers/start";
 import {stop} from "./src/handlers/stop";
+import {gameUsers} from "./src/handlers/gameUsers";
 
 require('dotenv').config()
 
@@ -29,9 +30,12 @@ app.post( '/api/register',  register)
 
 app.get( '/api/auth', authCookies )
 
+app.get( '/api/gameUsers', gameUsers )
+
 app.get( '/api/user-data', getDataFromCookies )
 
 app.get( '/api/games', games)
+app.post( '/api/games', gamesFiltered)
 
 app.get( '/api/servers', servers)
 

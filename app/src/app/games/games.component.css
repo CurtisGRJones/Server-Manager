@@ -21,3 +21,8 @@
 #dropdownMenuLink {
   display: inline;
 }
+
+.submit {
+  position: absolute;
+  right: 1em;
+}

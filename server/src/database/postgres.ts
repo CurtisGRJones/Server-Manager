@@ -168,17 +168,55 @@ export class Postgres {
         await this.connect
 
         return (await this.client.query(
-            `SELECT games.name, games.image_path, CONCAT(users.first_name, ' ' , users.last_name) as added_by 
+            `SELECT games.name, games.image_path, users.username 
             FROM games LEFT JOIN users 
             ON games.added_by = users.username`,
         )).rows
+    }
+
+    async getGameDataFiltered( user, game ): Promise<any[]> {
+        await this.connect
+
+        game = `%${game}%`
+        if ( !user || user.length == 0) {
+            return (await this.client.query(
+                `SELECT games.name, games.image_path, users.username 
+            FROM games LEFT JOIN users 
+            ON games.added_by = users.username
+            WHERE LOWER( games.name ) LIKE LOWER( $1 )`,
+                [
+                    game
+                ]
+            )).rows
+        } else {
+            return (await this.client.query(
+                `SELECT games.name, games.image_path, users.username 
+            FROM games LEFT JOIN users 
+            ON games.added_by = users.username
+            WHERE users.username = $1 AND LOWER( games.name ) LIKE LOWER( $2 )`,
+                [
+                    user,
+                    game
+                ]
+            )).rows
+        }
+    }
+
+    async getGameUsers(): Promise<string[]> {
+        await this.connect
+
+        return (await this.client.query(
+            `SELECT DISTINCT users.username
+            FROM games INNER JOIN users 
+            ON games.added_by = users.username`,
+        )).rows.map( ( value ) => value.username  )
     }
 
     async getServersData(): Promise<any[]> {
         await this.connect
 
         return (await this.client.query(
-            `SELECT servers.id, servers.ip, servers.game, servers.active, CONCAT(users.first_name, ' ' , users.last_name) as added_by 
+            `SELECT servers.id, servers.ip, servers.game, servers.active, users.username 
             FROM servers LEFT JOIN users ON servers.added_by = users.username 
             ORDER BY servers.ip`,
         )).rows

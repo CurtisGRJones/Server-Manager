@@ -32,7 +32,7 @@ export class ServerlistComponent implements OnInit {
           game: server.game,
           ip: server.ip,
           active: server.active,
-          addedBy: server.added_by,
+          addedBy: server.username,
           id: server.id,
         }
       })

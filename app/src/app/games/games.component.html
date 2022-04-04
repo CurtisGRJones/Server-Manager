@@ -1,15 +1,18 @@
 <div class="games">
-  <div class="filters">
-    <p> Search by Name: <input type="text" value="{{nameSearch}}" placeholder="Search for games">  <button class="btn-primary"> Submit </button> </p>
+
+  <form class="filters" (submit)="updateTable($event)">
+    <p> Search by Name: <input id="name" type="text" value="{{ nameSearch == 'undefined' ? '' : nameSearch }}" placeholder="Search for games"></p>
 
     <p class="users"> Search by Users: </p>
     <select id="user">
       <option value="none"> None </option>
-      <option *ngFor="let user of allUsers" value="{{user}}">{{user}}</option>
+      <option *ngFor="let user of allUsers" [selected]="user == usersSearch" [value]="user">{{user}}</option>
     </select>
 
-  </div>
+    <button type="submit" class="submit btn-primary"> Submit </button>
+
+  </form>
   <div class="table">
-    <app-gamestable></app-gamestable>
+    <app-gamestable userFilter="{{ usersSearch }}" nameFilter="{{ nameSearch }}"></app-gamestable>
   </div>
 </div>
