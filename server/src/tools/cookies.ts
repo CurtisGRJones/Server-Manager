@@ -107,22 +107,20 @@ export async function authenticated(req, client: Postgres, level: number): Promi
         return false
     }
 
-    if ( ! await client.doesCookieExist( cookie ) ) {
+    if ( !await client.doesCookieExist( cookie ) ) {
         return false
     }
 
     const row = await client.getAccountInfoFromCookies( cookie )
 
-    let timedOut = true
+    let timedOut = false
 
     if ( !row.remember || row.expiry < Date() ) {
         if ( row.last_used < new Date(Date() + 300000)) { // 5 minutes
             await client.useCookie(cookie)
-            timedOut = false
         } else {
             await client.removeCookie(cookie)
             timedOut = true
-
         }
     }
 
