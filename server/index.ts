@@ -5,6 +5,7 @@ import {register} from "./src/handlers/register";
 import {authCookies} from "./src/handlers/auth";
 import * as cookieParser from "cookie-parser";
 import {getDataFromCookies} from "./src/handlers/userData";
+import {logout} from "./src/handlers/logout";
 
 require('dotenv').config()
 
@@ -18,6 +19,7 @@ app.use(cookieParser())
 // API
 
 app.post( '/api/login',  login)
+app.get( '/api/logout',  logout)
 
 app.post( '/api/register',  register)
 

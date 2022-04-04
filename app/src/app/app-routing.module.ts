@@ -8,6 +8,7 @@ import {RegisterComponent} from "@app/register";
 import {ServerlistComponent} from "@app/serverlist";
 import {AdminComponent} from "@app/admin";
 import {AdminAuthGuard} from "@app/admin-auth.guard";
+import {LogoutComponent} from "@app/logout";
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: "login",
     component: LoginComponent,
+  },
+  {
+    path: "logout",
+    component: LogoutComponent,
   },
   {
     path: "register",

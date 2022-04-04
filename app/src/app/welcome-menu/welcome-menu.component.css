@@ -12,3 +12,9 @@ p {
   padding-right: 10px;
   color: black;
 }
+
+a {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: blue;
+}

@@ -13,7 +13,8 @@ import {LoginComponent} from "@app/login";
 import {RegisterComponent} from "@app/register";
 import { ServerlistComponent } from '@app/serverlist';
 import { AdminComponent } from '@app/admin';
-import { WelcomeMenuComponent } from './welcome-menu/welcome-menu.component';
+import { WelcomeMenuComponent } from '@app/welcome-menu';
+import { LogoutComponent } from '@app/logout';
 
 @NgModule( {
   declarations: [
@@ -27,6 +28,7 @@ import { WelcomeMenuComponent } from './welcome-menu/welcome-menu.component';
     ServerlistComponent,
     AdminComponent,
     WelcomeMenuComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,

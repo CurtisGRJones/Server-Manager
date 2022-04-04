@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core'
 import {AuthService} from "@app/auth.service";
 import {Observable} from "rxjs";
 import {AdminAuthGuard} from "@app/admin-auth.guard";
+import {UserService} from "@app/user.service";
 
 @Component( {
   selector: 'app-root',
@@ -12,11 +13,15 @@ export class AppComponent implements OnInit{
   title = 'Game Server Manager';
   date = new Date()
 
-  authenticated: true | Observable<boolean> | Promise<boolean> | undefined
+  authenticated: boolean | undefined
 
-  constructor(private authGuard: AdminAuthGuard) { }
+  constructor(private user: UserService) {
+
+  }
 
   ngOnInit() {
-    this.authenticated = this.authGuard.isAuthenticated
+    this.user.isAuthenticated.subscribe( result => {
+      this.authenticated = result
+    })
   }
 }

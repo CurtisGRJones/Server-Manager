@@ -23,30 +23,24 @@ export class AdminAuthGuard implements CanActivate, CanActivateChild {
   ) {
   }
 
-  get isAuthenticated() {
-    let loggedIn: boolean | Promise<boolean> | Observable<boolean> = this.auth.isAuthenticated
-    if ( !loggedIn ) {
-      loggedIn = this.user.isLoggedIn().pipe(map( res => {
-        const success = res.authorized
-        if ( !success ) {
-          this.router.navigate(['/login'])
-        }
-        this.auth.setAuthenticated(success)
-        return success
-      }))
+  get canActivateAuthenticate() {
+    const ret = this.user.isAuthenticated
+    if( ! ret ) {
+      this.router.navigate(['/login'])
     }
-    return loggedIn
+
+    return ret
   }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.isAuthenticated
+    return this.canActivateAuthenticate
   }
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.isAuthenticated
+    return this.canActivateAuthenticate
   }
 
 }

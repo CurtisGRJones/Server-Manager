@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit {
 
     this.Auth.getUserInfo(user, pass, remember).subscribe(( obj ) => {
       const data = obj as LoginResponseOptions
-      this.Auth.setAuthenticated(data.authenticated)
       if ( data.authenticated ) {
         if ( data.authToken )
           this.setCookie('authToken', data.authToken.value, data.authToken.expires, '/')

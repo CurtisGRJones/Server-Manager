@@ -95,3 +95,11 @@ export async function GetUserData( req ): Promise<UserData> {
 
     return userData(row)
 }
+
+export async function deleteCookie(req): Promise<void> {
+    const cookie = req.cookies.authToken
+
+    const client = new Postgres()
+
+    return client.removeCookie(cookie)
+}

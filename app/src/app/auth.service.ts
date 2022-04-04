@@ -28,12 +28,4 @@ export class AuthService {
       remember
     })
   }
-
-  setAuthenticated( authenticated: boolean ) {
-    this.authenticated = authenticated
-  }
-
-  get isAuthenticated(): boolean {
-    return this.authenticated
-  }
 }
