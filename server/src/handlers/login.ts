@@ -7,6 +7,7 @@ import {sleep} from "../tools/sleep";
 type ResponseOptions = {
     statusCode: number,
     authenticated?: boolean,
+    requiresRegistration?: true,
     userData?: {
         firstName: string,
         lastName: string
@@ -20,51 +21,54 @@ type ResponseOptions = {
 
 const auth = async (user: string, pass: string, remember: boolean): Promise<ResponseOptions> => {
     const client = new Postgres()
+    try {
+        const timeout = sleep(Math.floor(Math.random() * 250) + 250) // To prevent timing attacks
 
-    const timeout = sleep(Math.floor(Math.random() * 250) + 250) // To prevent timing attacks
-
-    const exists = await client.doesUserExist(user)
-    if (!exists) {
-        return {
-            statusCode: 200,
-            authenticated: false,
+        const exists = await client.doesUserExist(user)
+        if (!exists) {
+            return {
+                statusCode: 200,
+                authenticated: false,
+            }
         }
-    }
 
-    const userData = await client.getLoginDataFromUsername(user)
-    const password = userData.password
-    if (!checkPassword(password, pass)) {
-        await timeout
-        return {
-            statusCode: 200,
-            authenticated: false,
+        const userData = await client.getLoginDataFromUsername(user)
+        const password = userData.password
+        if (!checkPassword(password, pass)) {
+            await timeout
+            return {
+                statusCode: 200,
+                authenticated: false,
+            }
         }
-    }
 
-    const verified = client.isUserVerified(user)
-    if (!verified) {
+        if (!await client.isUserVerified(user)) {
+            return {
+                statusCode: 200,
+                authenticated: false,
+                requiresRegistration: true,
+                redirect: '/registrationRequested'
+            }
+        }
+
+        // TODO make the cookies more secure
+        const cookie = uuidv4()
+        await client.saveCookie(cookie, user, remember)
         return {
             statusCode: 200,
             authenticated: true,
-            redirect: '/registrationRequested'
+            authToken: {
+                value: cookie,
+                expires: new Date(Date.now() + 2592000000).toUTCString()
+            },
+            userData: {
+                firstName: userData.first_name,
+                lastName: userData.last_name
+            },
+            redirect: '/home'
         }
-    }
-
-    // TODO make the cookies more secure
-    const cookie = uuidv4()
-    await client.saveCookie( cookie, user, remember )
-    return {
-        statusCode: 200,
-        authenticated: true,
-        authToken: {
-            value: cookie,
-            expires: new Date(Date.now() + 2592000000).toUTCString()
-        },
-        userData: {
-            firstName: userData.first_name,
-            lastName: userData.last_name
-        },
-        redirect: '/home'
+    } finally {
+        client.close()
     }
 }
 

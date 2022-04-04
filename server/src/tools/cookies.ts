@@ -32,14 +32,12 @@ function notAuthorized(): UserData {
     }
 }
 
-export async function isAuthorizedCookies(req): Promise<UserData> {
+export async function isAuthorizedCookies(req, client: Postgres): Promise<UserData> {
     const cookie = req.cookies.authToken
 
     if( !cookie ) {
         return notAuthorized()
     }
-
-    const client = new Postgres()
 
     if ( ! await client.doesCookieExist( cookie ) ) {
         return notAuthorized()
@@ -61,17 +59,16 @@ export async function isAuthorizedCookies(req): Promise<UserData> {
         }
     }
 
+    await client.useCookie(cookie)
     return authorized()
 }
 
-export async function GetUserData( req ): Promise<UserData> {
+export async function GetUserData( req, client: Postgres): Promise<UserData> {
     const cookie = req.cookies.authToken
 
     if( !cookie ) {
         return notAuthorized()
     }
-
-    const client = new Postgres()
 
     if ( ! await client.doesCookieExist( cookie ) ) {
         return notAuthorized()
@@ -93,13 +90,12 @@ export async function GetUserData( req ): Promise<UserData> {
         }
     }
 
+    await client.useCookie(cookie)
     return userData(row)
 }
 
-export async function deleteCookie(req): Promise<void> {
+export async function deleteCookie(req, client: Postgres): Promise<void> {
     const cookie = req.cookies.authToken
-
-    const client = new Postgres()
 
     await client.removeCookie(cookie)
 }

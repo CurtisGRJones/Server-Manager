@@ -163,4 +163,8 @@ export class Postgres {
             [cookie]
         )
     }
+
+    async close() {
+        return this.client.end()
+    }
 }

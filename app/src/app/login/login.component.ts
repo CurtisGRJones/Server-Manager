@@ -6,6 +6,7 @@ import {UserService} from "@app/user.service";
 type LoginResponseOptions = {
   statusCode: number,
   authenticated: boolean,
+  requiresRegistration: boolean,
   userData?: {
     firstName: string,
     lastName: string
@@ -48,10 +49,16 @@ export class LoginComponent implements OnInit {
       const data = obj as LoginResponseOptions
       if ( data.authenticated ) {
         this.user.isUserAuthenticated.next(true)
-        this.router.navigate(['/home'])
+        this.router.navigate([data.redirect || '/home'])
       } else {
-        // TODO do this in validation
-        window.alert('Username or password invalid')
+        if ( data.requiresRegistration ) {
+          this.router.navigate([data.redirect || '/registrationRequested'])
+        } else if ( data.redirect ){
+          this.router.navigate([data.redirect || '/home'])
+        } else {
+          // TODO add validation parameter
+          window.alert('Username or password invalid')
+        }
       }
       })
   }
