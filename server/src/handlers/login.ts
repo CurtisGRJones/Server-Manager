@@ -74,6 +74,9 @@ export const login: RequestHandler = ( req, res ) => {
     const remember = req.body.remember == 'on'
 
     auth( user, pass, remember ).then( response => {
+        if (response.authToken) {
+            res.cookie('authToken', response.authToken.value)
+        }
         res.status(response.statusCode).send(response)
     } ).catch( err => {
         res.status(500).send({

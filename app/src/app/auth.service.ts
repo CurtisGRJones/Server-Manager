@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import {UserService} from "@app/user.service";
+import {AdminAuthGuard} from "@app/admin-auth.guard";
+import {Observable} from "rxjs";
 
 
 type AuthResponseOptions = {
@@ -13,10 +16,10 @@ type AuthResponseOptions = {
 export class AuthService {
 
   private authenticated = false
-  private firstName = ''
-  private lastName = ''
 
-  constructor( private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+  ) {}
 
   getUserInfo(user: string, pass: string, remember: string | undefined = undefined) {
     return this.http.post('/api/login', {
@@ -26,23 +29,11 @@ export class AuthService {
     })
   }
 
-  setFirstName( firstName: string | undefined ) {
-    this.firstName = firstName || ''
-  }
-
-  setLastName( lastName: string | undefined ) {
-    this.lastName = lastName || ''
-  }
-
-  get getFullName(): string {
-    return `${this.firstName} ${this.lastName}`
-  }
-
   setAuthenticated( authenticated: boolean ) {
     this.authenticated = authenticated
   }
 
-  get getAuthenticated(): boolean {
+  get isAuthenticated(): boolean {
     return this.authenticated
   }
 }

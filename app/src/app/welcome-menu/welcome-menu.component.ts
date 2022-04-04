@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "@app/auth.service";
+import {UserService} from "@app/user.service";
 
 @Component({
   selector: 'app-welcome-menu',
@@ -8,12 +8,18 @@ import {AuthService} from "@app/auth.service";
 })
 export class WelcomeMenuComponent implements OnInit {
 
+  firstName: string | undefined
+  lastName: string | undefined
   name: string | undefined
 
-  constructor( private Auth: AuthService ) { }
+  constructor( private user: UserService ) { }
 
   ngOnInit(): void {
-    this.name = this.Auth.getFullName
+      this.user.getUserData().subscribe( resp => {
+        this.firstName = resp.firstName
+        this.lastName = resp.lastName
+        this.name = `${this.firstName} ${this.lastName}`
+      } )
   }
 
 }

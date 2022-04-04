@@ -6,3 +6,9 @@
   padding-bottom: 10px;
   background: lightgray;
 }
+
+p {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: black;
+}

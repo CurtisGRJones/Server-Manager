@@ -103,4 +103,48 @@ export class Postgres {
         return true
 
     }
+
+    async doesCookieExist( cookie: string ): Promise<boolean> {
+        await this.connect
+
+        const queryResults = await this.client.query(
+            'SELECT EXISTS(SELECT 1 FROM loginCookies WHERE cookie = $1)',
+            [cookie]
+        )
+
+        return queryResults.rows[0].exists
+    }
+
+    async getAccountInfoFromCookies(cookie: string): Promise<any> {
+        await this.connect
+
+        const queryResults = await this.client.query(
+            `SELECT loginCookies.expiry, loginCookies.remember, loginCookies.last_used, 
+                            users.first_name, users.last_name, users.verified, users.username
+                            FROM loginCookies 
+                            INNER JOIN users
+                            ON loginCookies.username = users.username
+                            WHERE cookie = $1`,
+            [cookie]
+        )
+
+        return queryResults.rows[0]
+    }
+
+    async useCookie( cookie: string ): Promise<void> {
+        await this.client.query(
+            `UPDATE loginCookies
+                            SET last_used = NOW()
+                            WHERE cookie = $1`,
+            [cookie]
+        )
+    }
+
+    async removeCookie( cookie: string ): Promise<void> {
+        await this.client.query(
+            `DELETE FROM loginCookies
+                            WHERE cookie = $1`,
+            [cookie]
+        )
+    }
 }
