@@ -1,10 +1,11 @@
 import {RequestHandler} from "express";
 import {Postgres} from "../database/postgres";
 import {authenticated} from "../tools/cookies";
+import {notAuthorized} from "../tools/404";
 
 async function getServers (req, res, client) {
     if ( !(await authenticated(req, client, 1)) ) {
-        res.status(200).send([])
+        notAuthorized(res)
         return
     } else {
         res.status(200).send(await client.getServersData())

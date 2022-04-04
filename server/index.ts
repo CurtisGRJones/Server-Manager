@@ -33,6 +33,9 @@ app.get( '/api/games', games)
 
 app.get( '/api/servers', servers)
 
+app.post( '/api/servers/start', servers)
+app.post( '/api/servers/stop', servers)
+
 app.get( '/api', ( req, res ) => {
     res.send( 'API works' )
 } )
