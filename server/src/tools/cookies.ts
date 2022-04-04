@@ -8,7 +8,14 @@ type UserData = {
     lastName?: string
 }
 
-function authorized(row): UserData {
+function authorized(): UserData {
+    return {
+        statusCode: 200,
+        authorized: true,
+    }
+}
+
+function userData(row): UserData {
     return {
         statusCode: 200,
         authorized: true,
@@ -47,14 +54,14 @@ export async function isAuthorizedCookies(req): Promise<UserData> {
     if ( !row.remember || row.expiry < Date() ) {
         if ( row.last_used < new Date(Date() + 300000)) { // 5 minutes
             await client.useCookie(cookie)
-            return authorized(row)
+            return authorized()
         } else {
             await client.removeCookie(cookie)
             return notAuthorized()
         }
     }
 
-    return authorized(row)
+    return authorized()
 }
 
 export async function GetUserData( req ): Promise<UserData> {
@@ -79,12 +86,12 @@ export async function GetUserData( req ): Promise<UserData> {
     if ( !row.remember || row.expiry < Date() ) {
         if ( row.last_used < new Date(Date() + 300000)) { // 5 minutes
             await client.useCookie(cookie)
-            return authorized(row)
+            return userData(row)
         } else {
             await client.removeCookie(cookie)
             return notAuthorized()
         }
     }
 
-    return authorized(row)
+    return userData(row)
 }
