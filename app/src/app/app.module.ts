@@ -20,6 +20,7 @@ import { GamesTableComponent } from './gamestable/games-table.component';
 import { ServersComponent } from './servers/servers.component';
 import { LeftMenuComponent } from './left-menu/left-menu.component';
 import { GamesComponent } from './games/games.component';
+import { Err404Component } from './err404/err404.component';
 
 @NgModule( {
   declarations: [
@@ -39,6 +40,7 @@ import { GamesComponent } from './games/games.component';
     ServersComponent,
     LeftMenuComponent,
     GamesComponent,
+    Err404Component,
   ],
   imports: [
     BrowserModule,

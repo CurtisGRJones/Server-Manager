@@ -11,6 +11,10 @@ import {AdminAuthGuard} from "@app/admin-auth.guard";
 import {LogoutComponent} from "@app/logout";
 import {ServersComponent} from "@app/servers/servers.component";
 import {GamesComponent} from "@app/games/games.component";
+import {adminRoutes} from "@app/admin/admin-routing";
+import {Err404Component} from "@app/err404/err404.component";
+
+
 
 const routes: Routes = [
   {
@@ -48,6 +52,7 @@ const routes: Routes = [
     canActivate: [AdminAuthGuard],
     canActivateChild: [AdminAuthGuard],
   },
+  ...adminRoutes,
   {
     path: "servers",
     component: ServerlistComponent,
@@ -58,9 +63,11 @@ const routes: Routes = [
   },
   {
     path: "**",
-    redirectTo: 'home',
+    component: Err404Component,
   },
 ]
+
+console.log(routes)
 
 @NgModule( {
   imports: [RouterModule.forRoot( routes )],
