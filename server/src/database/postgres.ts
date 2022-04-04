@@ -115,6 +115,22 @@ export class Postgres {
         return queryResults.rows[0].exists
     }
 
+    async getCookieInfo(cookie: string): Promise<any> {
+        await this.connect
+
+        const queryResults = await this.client.query(
+            `SELECT loginCookies.expiry, loginCookies.remember, loginCookies.last_used, 
+                            users.verified
+                            FROM loginCookies 
+                            INNER JOIN users
+                            ON loginCookies.username = users.username
+                            WHERE cookie = $1`,
+            [cookie]
+        )
+
+        return queryResults.rows[0]
+    }
+
     async getAccountInfoFromCookies(cookie: string): Promise<any> {
         await this.connect
 
