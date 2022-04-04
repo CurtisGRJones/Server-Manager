@@ -2,7 +2,7 @@
   <form name="login" (submit)="loginUser($event)" class="{{ validated ? 'was-validated' :'not-validated' }}">
     <div class="username">
       <label for="user" class="form-label">Username</label>
-      <input name="user" id="user" type="text" class="needs-validation" value="{{ user }}" required />
+      <input name="user" id="user" type="text" class="needs-validation" value="{{ username }}" required />
       <div class="invalid-feedback">Username Required</div>
     </div>
     <div class="password">

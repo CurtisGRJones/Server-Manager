@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { HomeComponent } from '@app/home'
 import { RegistrationSubmittedComponent } from '@app/registeration-submitted';
-import { LoginMenuComponent } from '@app/login-menu';
+import { LoginMenuComponent } from '@app/top-corner-menu/login-menu';
 import { Err500Component } from '@app/err500'
 import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
@@ -13,8 +13,9 @@ import {LoginComponent} from "@app/login";
 import {RegisterComponent} from "@app/register";
 import { ServerlistComponent } from '@app/serverlist';
 import { AdminComponent } from '@app/admin';
-import { WelcomeMenuComponent } from '@app/welcome-menu';
+import { WelcomeMenuComponent } from '@app/top-corner-menu/welcome-menu';
 import { LogoutComponent } from '@app/logout';
+import { TopCornerMenuComponent } from './top-corner-menu/top-corner-menu.component';
 
 @NgModule( {
   declarations: [
@@ -29,6 +30,7 @@ import { LogoutComponent } from '@app/logout';
     AdminComponent,
     WelcomeMenuComponent,
     LogoutComponent,
+    TopCornerMenuComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,12 +9,16 @@ import {Router} from "@angular/router";
 })
 export class LogoutComponent implements OnInit {
 
-  constructor( private user: UserService, private router: Router ) { }
+  constructor(
+    private user: UserService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.user.logout().subscribe( resp => {
       if (resp.success) {
-        window.location.reload()
+        this.user.isUserAuthenticated.next(false)
+        this.router.navigate(['/home'])
       }
     })
   }

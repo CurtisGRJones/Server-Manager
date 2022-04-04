@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {map, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
 
 interface authResponse {
   authorized: boolean,
@@ -24,6 +24,8 @@ interface passFailResponse {
 export class UserService {
 
   constructor(private http: HttpClient) { }
+
+  public isUserAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   login(username: string, password: string) {
 

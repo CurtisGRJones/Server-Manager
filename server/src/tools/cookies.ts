@@ -101,5 +101,5 @@ export async function deleteCookie(req): Promise<void> {
 
     const client = new Postgres()
 
-    return client.removeCookie(cookie)
+    await client.removeCookie(cookie)
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import {AuthService} from "@app/auth.service";
 import {Router} from "@angular/router";
+import {UserService} from "@app/user.service";
 
 type LoginResponseOptions = {
   statusCode: number,
@@ -25,35 +26,32 @@ type LoginResponseOptions = {
 export class LoginComponent implements OnInit {
 
   validated: boolean = false
-  user: string = ""
+  username: string = ''
 
-  constructor( private Auth: AuthService, private router: Router ) {
-  }
+  constructor(
+    private Auth: AuthService,
+    private user: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-  }
-
-  private setCookie(name: string, value: string, expiry: string, path: string = '') {
-    let expires:string = `expires=${expiry}`;
-    let cpath:string = path ? `; path=${path}` : '';
-    document.cookie = `${name}=${value}; ${expires}${cpath}`;
   }
 
   loginUser(event: SubmitEvent) {
     event.preventDefault()
     const target = event.target as Element
-    const user: string = (<HTMLInputElement>target.querySelector('#user')).value
+    const username: string = (<HTMLInputElement>target.querySelector('#user')).value
     const pass: string = (<HTMLInputElement>target.querySelector('#pass')).value
     const remember: string = (<HTMLButtonElement>target.querySelector('#remember-me')).value
 
-    this.Auth.getUserInfo(user, pass, remember).subscribe(( obj ) => {
+    this.Auth.getUserInfo(username, pass, remember).subscribe(( obj ) => {
       const data = obj as LoginResponseOptions
       if ( data.authenticated ) {
-        if ( data.authToken )
-          this.setCookie('authToken', data.authToken.value, data.authToken.expires, '/')
+        this.user.isUserAuthenticated.next(true)
         this.router.navigate(['/home'])
       } else {
-        // TODO do this in validationwindow.alert('Username or password invalid')
+        // TODO do this in validation
+        window.alert('Username or password invalid')
       }
       })
   }
