@@ -9,9 +9,6 @@ tr {
 
 td {
   min-width: 5em;
-}
-
-td p {
   padding-left: 1em;
   padding-right: 1em;
 }

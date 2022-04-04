@@ -7,12 +7,12 @@
     <tr class="header">
       <td class="image"> Image </td>
       <td class="name"> Name </td>
-      <td class="addedBY"> Added by </td>
+      <td class="addedBY"> Added By </td>
     </tr>
     <tr class= "game" *ngFor="let game of games">
       <td class="image"> <img alt="img for {{game.name}}" src="{{ game.imagePath }}"> </td>
-      <td class="name"> <p> {{ game.name }} </p> </td>
-      <td class="addedBY"> <p> {{ game.addedBy }} </p> </td>
+      <td class="name"> {{ game.name }} </td>
+      <td class="addedBY"> {{ game.addedBy }} </td>
     </tr>
   </table>
 </table>

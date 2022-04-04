@@ -172,6 +172,13 @@ export class Postgres {
         )).rows
     }
 
+    async getServersData(): Promise<any[]> {
+        return (await this.client.query(
+            `SELECT servers.id, servers.ip, servers.game, servers.active, CONCAT(users.first_name, ' ' , users.last_name) as added_by 
+            FROM servers LEFT JOIN users ON servers.added_by = users.username`,
+        )).rows
+    }
+
     async close() {
         return this.client.end()
     }

@@ -1,13 +1,19 @@
-<body>
-  <app-top-corner-menu></app-top-corner-menu>
+<div class="background">
+</div>
+<app-top-corner-menu></app-top-corner-menu>
 
-  <div id=content >
-    <header>
-      <h1 id="title"> {{ title }} </h1>
-    </header>
-      <router-outlet></router-outlet>
-    <footer>
-        <p id="copyright"> Copyright &copy; {{ date.getFullYear() }}, Curtis Jones  </p>
-    </footer>
+<div id=content >
+  <header>
+    <h1 id="title"> {{ title }} </h1>
+  </header>
+  <router-outlet></router-outlet>
+  <div style="height: 5em"></div>
+
+
+</div>
+
+<footer>
+  <div>
+    <p id="copyright"> Copyright &copy; {{ date.getFullYear() }}, Curtis Jones  </p>
   </div>
-</body>
+</footer>
