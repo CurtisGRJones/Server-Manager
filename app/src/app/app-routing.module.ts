@@ -9,6 +9,8 @@ import {ServerlistComponent} from "@app/serverlist";
 import {AdminComponent} from "@app/admin";
 import {AdminAuthGuard} from "@app/admin-auth.guard";
 import {LogoutComponent} from "@app/logout";
+import {ServersComponent} from "@app/servers/servers.component";
+import {GamesComponent} from "@app/games/games.component";
 
 const routes: Routes = [
   {
@@ -32,13 +34,22 @@ const routes: Routes = [
     component: RegistrationSubmittedComponent
   },
   {
+    path: "games",
+    component: GamesComponent,
+  },
+  {
+    path: "servers",
+    component: ServersComponent,
+    canActivate: [AdminAuthGuard],
+  },
+  {
     path: "admin",
     component: AdminComponent,
     canActivate: [AdminAuthGuard],
     canActivateChild: [AdminAuthGuard],
   },
   {
-    path: "serverList",
+    path: "servers",
     component: ServerlistComponent,
   },
   {

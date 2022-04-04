@@ -1,0 +1,15 @@
+<div class="games">
+  <div class="filters">
+    <p> Search by Name: <input type="text" value="{{nameSearch}}" placeholder="Search for games">  <button class="btn-primary"> Submit </button> </p>
+
+    <p class="users"> Search by Users: </p>
+    <select id="user">
+      <option value="none"> None </option>
+      <option *ngFor="let user of allUsers" value="{{user}}">{{user}}</option>
+    </select>
+
+  </div>
+  <div class="table">
+    <app-gamestable></app-gamestable>
+  </div>
+</div>

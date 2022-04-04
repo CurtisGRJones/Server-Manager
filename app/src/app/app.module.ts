@@ -17,6 +17,9 @@ import { WelcomeMenuComponent } from '@app/top-corner-menu/welcome-menu';
 import { LogoutComponent } from '@app/logout';
 import { TopCornerMenuComponent } from './top-corner-menu/top-corner-menu.component';
 import { GamesTableComponent } from './gamestable/games-table.component';
+import { ServersComponent } from './servers/servers.component';
+import { LeftMenuComponent } from './left-menu/left-menu.component';
+import { GamesComponent } from './games/games.component';
 
 @NgModule( {
   declarations: [
@@ -33,6 +36,9 @@ import { GamesTableComponent } from './gamestable/games-table.component';
     LogoutComponent,
     TopCornerMenuComponent,
     GamesTableComponent,
+    ServersComponent,
+    LeftMenuComponent,
+    GamesComponent,
   ],
   imports: [
     BrowserModule,
