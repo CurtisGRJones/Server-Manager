@@ -212,6 +212,16 @@ export class Postgres {
         )).rows.map( ( value ) => value.username  )
     }
 
+    async getServerUsers(): Promise<string[]> {
+        await this.connect
+
+        return (await this.client.query(
+            `SELECT DISTINCT users.username
+            FROM servers INNER JOIN users 
+            ON servers.added_by = users.username`,
+        )).rows.map( ( value ) => value.username  )
+    }
+
     async getServersData(): Promise<any[]> {
         await this.connect
 

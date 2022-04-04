@@ -11,6 +11,7 @@ import {servers} from "./src/handlers/servers";
 import {start} from "./src/handlers/start";
 import {stop} from "./src/handlers/stop";
 import {gameUsers} from "./src/handlers/gameUsers";
+import {serverUsers} from "./src/handlers/serverUsers";
 
 require('dotenv').config()
 
@@ -30,14 +31,15 @@ app.post( '/api/register',  register)
 
 app.get( '/api/auth', authCookies )
 
-app.get( '/api/gameUsers', gameUsers )
-
 app.get( '/api/user-data', getDataFromCookies )
 
 app.get( '/api/games', games)
 app.post( '/api/games', gamesFiltered)
+app.get( '/api/gameUsers', gameUsers )
 
 app.get( '/api/servers', servers)
+app.post( '/api/servers', servers)
+app.get( '/api/serverUsers', serverUsers)
 
 app.post( '/api/servers/start', start)
 app.post( '/api/servers/stop', stop)

@@ -1,1 +1,16 @@
-<p>servers works!</p>
+<form class="filters" (submit)="updateTable($event)">
+  <p> Search by Game: <input id="game" type="text" value="{{ nameSearch == 'undefined' ? '' : nameSearch }}" placeholder="Search for games"></p>
+  <p> Search by IP: <input id="ip" type="text" value="{{ ipSearch == 'undefined' ? '' : ipSearch }}" placeholder="Search by IP"></p>
+
+  <p class="users"> Search by Users: </p>
+  <select id="user">
+    <option value="none"> None </option>
+    <option *ngFor="let user of allUsers" [selected]="user == usersSearch" [value]="user">{{user}}</option>
+  </select>
+
+  <button type="submit" class="submit btn-primary"> Submit </button>
+</form>
+
+<div class="table">
+  <app-serverlist></app-serverlist>
+</div>
