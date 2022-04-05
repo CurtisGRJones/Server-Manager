@@ -38,4 +38,26 @@ export class RegistrationRequestsComponent implements OnInit{
     })
   }
 
+  approve(username: string) {
+    this.http.post<void>(
+      '/api/acceptRegistration',
+      {
+        user: username
+      }
+    ).subscribe( () => {
+      this.ngOnInit()
+    })
+  }
+
+  remove(username: string) {
+    this.http.post<void>(
+      '/api/removeRegistration',
+      {
+        user: username
+      }
+    ).subscribe( () => {
+      this.ngOnInit()
+    })
+  }
+
 }

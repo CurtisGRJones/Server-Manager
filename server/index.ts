@@ -13,10 +13,12 @@ import {stop} from "./src/handlers/stop";
 import {gameUsers} from "./src/handlers/gameUsers";
 import {serverUsers} from "./src/handlers/serverUsers";
 import {registrationRequests} from "./src/handlers/registrationRequests";
+import {acceptRegistration} from "./src/handlers/acceptRegistration";
+import {removeRegistration} from "./src/handlers/removeRegistration";
 
 require('dotenv').config()
 
-const port = 8080
+const port = 8000
 
 const app = express()
 app.use( bodyParser.json() )
@@ -30,6 +32,8 @@ app.get( '/api/logout',  logout)
 
 app.post( '/api/register',  register)
 app.get('/api/registrationRequests', registrationRequests)
+app.post( '/api/acceptRegistration', acceptRegistration )
+app.post( '/api/removeRegistration', removeRegistration )
 
 app.get( '/api/auth', authCookies )
 

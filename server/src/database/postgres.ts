@@ -88,6 +88,19 @@ export class Postgres {
         return queryResults.rows
     }
 
+    async acceptRegistration(user: string): Promise<void> {
+        await this.client.query(`UPDATE users SET 
+        verified=true, role=1
+        WHERE username = $1`,
+            [ user ])
+    }
+
+    async removeRegistration(user: string): Promise<void> {
+        await this.client.query(`DELETE FROM users 
+        WHERE username = $1`,
+            [ user ])
+    }
+
     async saveCookie(cookie: string, user: string, remember: boolean = false): Promise<boolean>  {
         await this.connect
 
