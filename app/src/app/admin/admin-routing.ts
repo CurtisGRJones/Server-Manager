@@ -5,30 +5,35 @@ import {RegistrationRequestsComponent} from "@app/admin/registration-requests/re
 import {AddGameComponent} from "@app/admin/add-game/add-game.component";
 import {AddServerComponent} from "@app/admin/add-server/add-server.component";
 import {ManageUsersComponent} from "@app/admin/manage-users/manage-users.component";
+import {AdminHomeComponent} from "@app/admin/admin-home/admin-home.component";
 
 export const adminRoutes: Routes = [
   {
-    path: "admin/userUsage",
+    path: "",
+    component: AdminHomeComponent,
+  },
+  {
+    path: "userUsage",
     component: UserUsageComponent,
   },
   {
-    path: "admin/serverUsage",
+    path: "serverUsage",
     component: ServerUsageComponent,
   },
   {
-    path: "admin/pendingRegistations",
+    path: "pendingRegistations",
     component: RegistrationRequestsComponent,
   },
   {
-    path: "admin/addGame",
+    path: "addGame",
     component: AddGameComponent,
   },
   {
-    path: "admin/addServer",
+    path: "addServer",
     component: AddServerComponent,
   },
   {
-    path: "admin/users",
+    path: "users",
     component: ManageUsersComponent,
   },
 ]

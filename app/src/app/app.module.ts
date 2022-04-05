@@ -27,6 +27,7 @@ import { RegistrationRequestsComponent } from './admin/registration-requests/reg
 import { AddGameComponent } from './admin/add-game/add-game.component';
 import { AddServerComponent } from './admin/add-server/add-server.component';
 import { ManageUsersComponent } from './admin/manage-users/manage-users.component';
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 
 @NgModule( {
   declarations: [
@@ -53,6 +54,7 @@ import { ManageUsersComponent } from './admin/manage-users/manage-users.componen
     AddGameComponent,
     AddServerComponent,
     ManageUsersComponent,
+    AdminHomeComponent,
   ],
   imports: [
     BrowserModule,

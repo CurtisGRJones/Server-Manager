@@ -48,11 +48,11 @@ const routes: Routes = [
   },
   {
     path: "admin",
-    component: AdminComponent,
     canActivate: [AdminAuthGuard],
     canActivateChild: [AdminAuthGuard],
+    component: AdminComponent,
+    children: adminRoutes
   },
-  ...adminRoutes,
   {
     path: "servers",
     component: ServerlistComponent,
@@ -66,8 +66,6 @@ const routes: Routes = [
     component: Err404Component,
   },
 ]
-
-console.log(routes)
 
 @NgModule( {
   imports: [RouterModule.forRoot( routes )],
