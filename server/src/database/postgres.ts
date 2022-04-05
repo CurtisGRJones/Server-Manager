@@ -77,6 +77,17 @@ export class Postgres {
         return queryResults.rows[0]
     }
 
+    async getRegistrationRequests() {
+        await this.connect
+
+        const queryResults = await this.client.query(
+            `SELECT username, first_name, last_name, email, created_on FROM users WHERE verified = false
+            ORDER BY created_on` ,
+        )
+
+        return queryResults.rows
+    }
+
     async saveCookie(cookie: string, user: string, remember: boolean = false): Promise<boolean>  {
         await this.connect
 

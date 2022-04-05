@@ -16,17 +16,26 @@ type Request = {
 })
 export class RegistrationRequestsComponent implements OnInit{
 
-  requests: Request[] = [{
-    username: 'bobbyBoy6969',
-    firstName: 'Bob',
-    lastName: 'Burger',
-    email: 'bob@BobsBurgers.ca',
-    date: new Date(),
-  }]
+  requests: Request[] = []
+  requestsPopulated: boolean | undefined
 
   constructor( private http: HttpClient) {}
 
   ngOnInit() {
+    this.http.get<any[]>(
+      '/api/registrationRequests'
+    ).subscribe(resp => {
+      this.requests = resp.map(request => {
+        return {
+          username: request.username,
+          firstName: request.first_name,
+          lastName: request.last_name,
+          email: request.email,
+          date: new Date(request.created_on)
+        }
+      })
+      this.requestsPopulated = this.requests.length > 0
+    })
   }
 
 }

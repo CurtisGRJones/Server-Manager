@@ -12,6 +12,7 @@ import {start} from "./src/handlers/start";
 import {stop} from "./src/handlers/stop";
 import {gameUsers} from "./src/handlers/gameUsers";
 import {serverUsers} from "./src/handlers/serverUsers";
+import {registrationRequests} from "./src/handlers/registrationRequests";
 
 require('dotenv').config()
 
@@ -28,6 +29,7 @@ app.post( '/api/login',  login)
 app.get( '/api/logout',  logout)
 
 app.post( '/api/register',  register)
+app.get('/api/registrationRequests', registrationRequests)
 
 app.get( '/api/auth', authCookies )
 
