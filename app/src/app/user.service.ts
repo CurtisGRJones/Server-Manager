@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, map, Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 interface authResponse {
   authorized: boolean,
@@ -23,13 +24,12 @@ interface passFailResponse {
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) { }
 
   public isUserAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
-  login(username: string, password: string) {
-
-  }
 
   isLoggedIn() {
     return this.http.get<authResponse>(
@@ -37,13 +37,27 @@ export class UserService {
       )
   }
 
-  get isAuthenticated() {
+  isAuthenticated( redirectIfNotAuth: boolean = false ) {
     let loggedIn: boolean | Promise<boolean> | Observable<boolean> = false
     if ( !loggedIn ) {
       loggedIn = this.isLoggedIn().pipe(map( res => {
         return res.authorized
       }))
     }
+    if ( redirectIfNotAuth ) {
+      if (typeof loggedIn == 'boolean') {
+        if (!loggedIn) {
+          this.router.navigate(['/login'])
+        }
+      } else {
+        loggedIn.subscribe(authed => {
+          if (!authed) {
+            this.router.navigate(['/login'])
+          }
+        })
+      }
+    }
+
     return loggedIn
   }
 

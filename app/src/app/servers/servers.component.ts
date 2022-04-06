@@ -33,8 +33,6 @@ export class ServersComponent implements OnInit {
 
     this.parseActiveSearch()
 
-    console.log(this.gameSearch)
-
     this.http.get<string[]>("/api/serverUsers").subscribe( resp =>
       this.allUsers = resp
     )

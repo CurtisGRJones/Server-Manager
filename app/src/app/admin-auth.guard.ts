@@ -18,18 +18,12 @@ export class AdminAuthGuard implements CanActivate, CanActivateChild {
 
   constructor(
     private auth: AuthService,
-    private router: Router,
     private user: UserService
   ) {
   }
 
   get canActivateAuthenticate() {
-    const ret = this.user.isAuthenticated
-    if( ! ret ) {
-      this.router.navigate(['/login'])
-    }
-
-    return ret
+    return this.user.isAuthenticated(true)
   }
 
   canActivate(

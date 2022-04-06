@@ -68,10 +68,6 @@ export class GamesTableComponent implements OnInit {
         this.gamesPopulated = true
       })
     }
-
-    console.log( 'filters' )
-    console.log(this.userFilter)
-    console.log(this.nameFilter)
   }
 
 }
