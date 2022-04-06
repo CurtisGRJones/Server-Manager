@@ -1,0 +1,246 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.2 (Debian 13.2-1.pgdg100+1)
+-- Dumped by pg_dump version 13.2 (Debian 13.2-1.pgdg100+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: games; Type: TABLE; Schema: public; Owner: default
+--
+
+CREATE TABLE public.games (
+    name character varying(64) NOT NULL,
+    config character varying(256),
+    image_path character varying(64),
+    added_by character varying(16)
+);
+
+
+ALTER TABLE public.games OWNER TO "default";
+
+--
+-- Name: logincookies; Type: TABLE; Schema: public; Owner: default
+--
+
+CREATE TABLE public.logincookies (
+    cookie character varying(36),
+    expiry timestamp without time zone DEFAULT (now() + '30 days'::interval),
+    last_used timestamp without time zone DEFAULT now(),
+    remember boolean DEFAULT false,
+    username character varying(16) NOT NULL
+);
+
+
+ALTER TABLE public.logincookies OWNER TO "default";
+
+--
+-- Name: servers; Type: TABLE; Schema: public; Owner: default
+--
+
+CREATE TABLE public.servers (
+    id uuid DEFAULT public.uuid_generate_v4() NOT NULL,
+    created_on timestamp without time zone DEFAULT now() NOT NULL,
+    ip character varying(15),
+    active boolean NOT NULL,
+    game character varying(64) NOT NULL,
+    added_by character varying(16)
+);
+
+
+ALTER TABLE public.servers OWNER TO "default";
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: default
+--
+
+CREATE TABLE public.users (
+    username character varying(16) NOT NULL,
+    password character varying(128) NOT NULL,
+    verified boolean DEFAULT false,
+    email character varying(64) NOT NULL,
+    first_name character varying(32) NOT NULL,
+    last_name character varying(32) NOT NULL,
+    created_on timestamp without time zone DEFAULT now() NOT NULL,
+    verified_on timestamp without time zone,
+    last_login timestamp without time zone,
+    verified_by character varying(16),
+    role integer DEFAULT 0
+);
+
+
+ALTER TABLE public.users OWNER TO "default";
+
+--
+-- Data for Name: games; Type: TABLE DATA; Schema: public; Owner: default
+--
+
+COPY public.games (name, config, image_path, added_by) FROM stdin;
+COD WAW	{ name: "cod waw" }	assets/waw.png	CJ
+Minecraft	{ name: "minecraft" }	assets/minecraft.png	CJ
+AOE 4	{ name: "aoe 4" }	assets/aoe4.png	CJ
+AOE 2	{ name: "aoe 2" }	assets/aoe2.png	CJ
+\.
+
+
+--
+-- Data for Name: logincookies; Type: TABLE DATA; Schema: public; Owner: default
+--
+
+COPY public.logincookies (cookie, expiry, last_used, remember, username) FROM stdin;
+cc19ea1f-658e-4e44-9d3b-27bd10cd0b04	2022-05-05 18:19:28.703088	2022-04-05 18:50:24.1007	t	CJ
+\.
+
+
+--
+-- Data for Name: servers; Type: TABLE DATA; Schema: public; Owner: default
+--
+
+COPY public.servers (id, created_on, ip, active, game, added_by) FROM stdin;
+a43194ca-a6bc-4404-ad33-32d039adccbe	2022-04-04 16:56:52.495972	192.168.0.9	f	Minecraft	CJ
+3c24b6f0-d3e4-44cc-bb84-4fd17da38ab3	2022-04-04 16:56:52.495972	192.168.0.2	f	AOE 2	CJ
+d7b42e19-19fa-490c-b708-2aa2f31c5eea	2022-04-04 16:56:52.495972	192.168.0.4	f	AOE 4	CJ
+a6f8a1bd-b492-44c6-8652-69a5df2770b8	2022-04-04 16:56:52.495972	192.168.0.7	f	COD WAW	CJ
+e28f28a4-acd3-4df2-aae9-f3cbc75c42da	2022-04-04 16:56:52.495972	192.168.0.5	f	Minecraft	CJ
+59bf52f6-dbe8-4bfc-b38a-08f013efc6e3	2022-04-04 16:56:52.495972	192.168.0.3	f	Minecraft	CJ
+3d4c151c-0aa4-45bd-8766-b9c70d9d9c38	2022-04-04 16:56:52.495972	192.168.0.1	f	Minecraft	CJ
+a37f69d5-6707-4350-a4b8-9a4eebd65c34	2022-04-04 16:56:52.495972	192.168.0.6	f	Minecraft	CJ
+faff2f21-d5ee-4d77-95ab-cd2b3f2f4ad6	2022-04-04 16:56:52.495972	192.168.0.8	f	Minecraft	CJ
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: default
+--
+
+COPY public.users (username, password, verified, email, first_name, last_name, created_on, verified_on, last_login, verified_by, role) FROM stdin;
+CJ	sha256$TTw7yUGIQv2WPEzEMaOBYRa0jGTbjDEq$955a9644837469f37d2d9c3ebfba465c210040a967bf57a9249090ea16a0f6fc	t	Jonesc21@mcmaster.ca	Curtis	Jones	2022-04-03 18:44:42.409905	2022-04-03 18:45:41.761927	\N	\N	3
+CJthe2nd	sha256$12Eskgj6MXYXY4qH2KeSb4YA9c6pyh9Z$d03b40894250f0c50535d6ade34960f321f5b6258b3f9d12f607bb8ac2333edf	t	bob@bob.com	xfnmgfhn	fbdbd	2022-04-03 20:10:20.847159	\N	\N	\N	1
+HelloWorld	sha256$QJB0rrxbkB3oG4bU2TF0uxUgm26ljw93$606c2974581e8b7be41b965fa6ab421eb6e86226c4db928a120d0b6ea6c4fd1c	f	curtisJones@fakeemail.com	Curtis	Jones	2022-04-05 18:33:44.773527	\N	\N	\N	0
+BadUser	sha256$EvdCAIjGszexbO47H1201pwTrB2gRkMY$0ffcf70b0ad656234930287e85d7c743c4db11f64bba284735b8d1fe68c4b61b	f	IWillHackYou@fakeemail.com	Bad	User	2022-04-05 18:34:18.676161	\N	\N	\N	0
+GoodUser	sha256$v8zDEo1hLwhdw8DsIh1d3XcP83uVCDRV$505abc42b04dfc14c5d3129c93d4e272533d1a51c0fbc599c499955ea8f14db1	f	IJustWannaGame@fakeemail.com	Good	User	2022-04-05 18:38:24.655876	\N	\N	\N	0
+test	sha256$8McYS3RhFpLGLY2Kv0ZTYrlx0OmEwvAZ$3aac337feed0a402313c5d5d9b489dedc89a9f63e1351e85740d9511c2208c2c	t	test@fakeemail.com	test	test	2022-04-05 18:38:49.37517	\N	\N	\N	1
+\.
+
+
+--
+-- Name: games games_pkey; Type: CONSTRAINT; Schema: public; Owner: default
+--
+
+ALTER TABLE ONLY public.games
+    ADD CONSTRAINT games_pkey PRIMARY KEY (name);
+
+
+--
+-- Name: logincookies logincookies_cookie_key; Type: CONSTRAINT; Schema: public; Owner: default
+--
+
+ALTER TABLE ONLY public.logincookies
+    ADD CONSTRAINT logincookies_cookie_key UNIQUE (cookie);
+
+
+--
+-- Name: logincookies logincookies_pkey; Type: CONSTRAINT; Schema: public; Owner: default
+--
+
+ALTER TABLE ONLY public.logincookies
+    ADD CONSTRAINT logincookies_pkey PRIMARY KEY (username);
+
+
+--
+-- Name: servers servers_pkey; Type: CONSTRAINT; Schema: public; Owner: default
+--
+
+ALTER TABLE ONLY public.servers
+    ADD CONSTRAINT servers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: default
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: default
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (username);
+
+
+--
+-- Name: games fk_added_by; Type: FK CONSTRAINT; Schema: public; Owner: default
+--
+
+ALTER TABLE ONLY public.games
+    ADD CONSTRAINT fk_added_by FOREIGN KEY (added_by) REFERENCES public.users(username) ON DELETE SET NULL;
+
+
+--
+-- Name: servers fk_added_by; Type: FK CONSTRAINT; Schema: public; Owner: default
+--
+
+ALTER TABLE ONLY public.servers
+    ADD CONSTRAINT fk_added_by FOREIGN KEY (added_by) REFERENCES public.users(username) ON DELETE SET NULL;
+
+
+--
+-- Name: servers fk_game; Type: FK CONSTRAINT; Schema: public; Owner: default
+--
+
+ALTER TABLE ONLY public.servers
+    ADD CONSTRAINT fk_game FOREIGN KEY (game) REFERENCES public.games(name) ON DELETE CASCADE;
+
+
+--
+-- Name: logincookies fk_username; Type: FK CONSTRAINT; Schema: public; Owner: default
+--
+
+ALTER TABLE ONLY public.logincookies
+    ADD CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES public.users(username) ON DELETE CASCADE;
+
+
+--
+-- Name: users users_verified_by_fkey; Type: FK CONSTRAINT; Schema: public; Owner: default
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_verified_by_fkey FOREIGN KEY (verified_by) REFERENCES public.users(username);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
