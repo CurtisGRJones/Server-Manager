@@ -18,6 +18,10 @@ import {Err404Component} from "@app/err404/err404.component";
 
 const routes: Routes = [
   {
+    path: "",
+    redirectTo: "home"
+  },
+  {
     path: "home",
     component: HomeComponent
   },
