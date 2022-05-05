@@ -1,0 +1,37 @@
+#title {
+  text-align: center;
+}
+
+#copyright {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
+}
+
+#content {
+  background: lightgray;
+  width: 50%;
+  min-height: 100vh;
+  max-width: 1000px;
+  position: absolute;
+  top: 0;
+  transform: translate( 50% );
+}
+
+.background {
+  background-image: url('../assets/background.png');
+  background-size: 25% 25%;
+  min-height: 100vh;
+  min-width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+footer{
+  position: fixed;
+  bottom: 1em;
+}
+

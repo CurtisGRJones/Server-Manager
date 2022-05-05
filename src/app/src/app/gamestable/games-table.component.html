@@ -1,0 +1,18 @@
+<div>
+  <h2> Games </h2>
+</div>
+
+<table *ngIf="gamesPopulated">
+  <table>
+    <tr class="header">
+      <td class="image"> Image </td>
+      <td class="name"> Name </td>
+      <td class="addedBY"> Added By </td>
+    </tr>
+    <tr class="game" *ngFor="let game of games">
+      <td class="image"> <img alt="img for {{game.name}}" src="{{ game.imagePath }}"> </td>
+      <td class="name"> {{ game.name }} </td>
+      <td class="addedBY"> {{ game.addedBy }} </td>
+    </tr>
+  </table>
+</table>

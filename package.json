@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "Server-Manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:CurtisGRJones/Server-Manager.git",
+  "author": "Curtis Jones <cjones2362@outlook.com>",
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "src/api",
+      "src/app"
+    ]
+  },
+  "scripts": {
+    "app": "cd src/app && yarn start",
+    "app-dev": "cd src/app && yarn dev",
+    "api": "cd src/api && yarn start",
+    "api-dev": "cd src/api && yarn dev"
+  }
+}

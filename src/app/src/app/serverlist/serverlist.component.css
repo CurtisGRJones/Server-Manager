@@ -1,0 +1,45 @@
+table {
+  margin: 0 auto;
+  text-align: center;
+}
+
+td {
+  min-width: 5em;
+}
+
+td {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+table, tr, td {
+  border: 1px solid black;
+}
+
+img {
+  height: 100%;
+  max-height: 4em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.name {
+  width: 10em;
+  text-align: center;
+}
+
+.addedBy {
+  text-align: center;
+}
+
+.header {
+  background: lightblue;
+}
+
+.game {
+  background: lightcyan;
+}
+
+h2 {
+  text-align: center;
+}
